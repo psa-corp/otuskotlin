@@ -15,12 +15,21 @@ class GenericTest {
         assertContains(elementAsList(12), 12)
     }
 
+    @Test
+    fun genericTest2() {
+        assertEquals("String", willNotCompile("test"))
+    }
 
-    /*
+    /* error
     fun <T> willNotCompile(variable: T) {
         println(T::class.java)
     }
-     */
+    */
+    // fix <reified T>
+    private inline fun <reified T> willNotCompile(variable: T): String {
+        println(T::class.java)
+        return T::class.java.simpleName
+    }
 
     private fun variant1(klass: KClass<*>): String = klass.simpleName ?: "(unknown)"
     private inline fun <reified T> variant2() = variant1(T::class)
