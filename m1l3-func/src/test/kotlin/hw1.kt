@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Assertions.assertEquals
 import kotlin.test.Ignore
 import kotlin.test.Test
 
@@ -11,7 +12,6 @@ import kotlin.test.Test
 class HomeWork1Test {
 
     @Test
-    @Ignore
     fun mapListToNamesTest() {
         val input = listOf(
             mapOf(
@@ -32,7 +32,21 @@ class HomeWork1Test {
             "Петька",
             "Королев Сергей",
         )
-//        val res = mapListToNames(input)
-//        assertEquals(expected, res)
+        val res = mapListToNames(input)
+        assertEquals(expected, res)
+
+    }
+
+    private fun mapListToNames(input: List<Map<String, String>>): List<String> {
+        return input.
+        map {
+            listOf(getValue("last", it), getValue("first", it), getValue("middle", it))
+                .filter {i -> i.isNotBlank() }
+                .joinToString(" ")
+        }.toList()
+    }
+
+    private fun getValue(key: String, map: Map<String, String>): String {
+        return map.getOrDefault(key, "")
     }
 }
